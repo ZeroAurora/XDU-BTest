@@ -1,0 +1,11 @@
+name = "xdu-btest"
+main = ".svelte-kit/cloudflare/_worker.js"
+compatibility_date = "2025-04-20"
+
+[assets]
+binding = "ASSETS"
+directory = ".svelte-kit/cloudflare"
+
+[[kv_namespaces]]
+binding = "KV"
+id = "111eaf6eecbb434b9aa55412c324c759"
