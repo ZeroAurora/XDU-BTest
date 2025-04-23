@@ -52,24 +52,21 @@
     if (aqi <= 300) return "重度污染";
     return "严重污染";
   }
-
-  // 设置文本颜色
-  $effect(() => {
-    if (text && props.aqi !== undefined) {
-      text.style.color = `rgb(${color[0]}, ${color[1]}, ${color[2]})`;
-    }
-  });
 </script>
 
-<div class="card bg-gray-100/50 shadow-sm w-[300px] h-[300px]">
+<div class="card bg-gray-100/50 shadow-sm">
   <div class="card-body">
-    <h2 class="card-title text-xl">空气质量指数（AQI）</h2>
+    <h2 class="card-title text-2xl">空气质量指数（AQI）</h2>
     <div class="flex w-full h-full items-center justify-center">
       <div class="flex flex-col items-center">
         <div class="w-[200px] h-[120px]">
           <AqiSvg aqi={props.aqi} {color} />
         </div>
-        <span bind:this={text} class="text-xl font-bold mt-2">{getAQIStatus(props.aqi)}</span>
+        <span
+          bind:this={text}
+          class="text-xl font-bold mt-2"
+          style:color={`rgb(${color[0]}, ${color[1]}, ${color[2]})`}>{getAQIStatus(props.aqi)}</span
+        >
       </div>
     </div>
   </div>
