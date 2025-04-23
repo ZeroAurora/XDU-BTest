@@ -1,10 +1,8 @@
 import { fileURLToPath } from "node:url";
-import path from "node:path";
 
 import globals from "globals";
 
 import { includeIgnoreFile } from "@eslint/compat";
-import { FlatCompat } from "@eslint/eslintrc";
 import js from "@eslint/js";
 
 import prettier from "eslint-config-prettier";
@@ -12,13 +10,6 @@ import svelte from "eslint-plugin-svelte";
 import ts from "typescript-eslint";
 
 import svelteConfig from "./svelte.config.js";
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
-const compat = new FlatCompat({
-  baseDirectory: __dirname,
-});
 
 const gitignorePath = fileURLToPath(new URL("./.gitignore", import.meta.url));
 
@@ -47,5 +38,4 @@ export default ts.config(
       },
     },
   },
-  ...compat.extends("plugin:storybook/recommended"),
 );
