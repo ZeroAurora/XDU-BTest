@@ -1,5 +1,5 @@
 import type { KVNamespace } from "@cloudflare/workers-types";
-import type { AirQurality, Location } from "./types";
+import type { AirQurality, Location } from "../types";
 
 import ky from "ky";
 
@@ -36,7 +36,7 @@ export class QWeather {
   }
   
   public async getAirQuality(locationId: string) {
-    const cached = await this.KV.get(locationId);
+    const cached = await this.KV.get(`${locationId}:aqdata`);
     if (cached) {
       return JSON.parse(cached) as AirQurality;
     }
