@@ -25,16 +25,18 @@ export class QWeather {
   }
 
   public async searchLocation(keyword: string) {
-    return (await this.api
-      .get("geo/v2/city/lookup", {
-        searchParams: {
-          location: keyword,
-          range: "cn",
-        },
-      })
-      .json()) as Location;
+    const resp = await this.api.get("geo/v2/city/lookup", {
+      searchParams: {
+        location: keyword,
+        range: "cn",
+      },
+      throwHttpErrors: false,
+    });
+
+    if (resp.status === 404) return null;
+    else return (await resp.json()) as Location;
   }
-  
+
   public async getAirQuality(locationId: string) {
     const cached = await this.KV.get(`${locationId}:aqdata`);
     if (cached) {
@@ -48,8 +50,8 @@ export class QWeather {
           location: locationId,
         },
       })
-      .text()
-    
+      .text();
+
     await this.KV.put(`${locationId}:aqdata`, aqData, {
       expirationTtl: 1800, // 30 minutes
     });
