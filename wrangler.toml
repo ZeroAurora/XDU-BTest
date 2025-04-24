@@ -2,6 +2,10 @@ name = "xdu-btest"
 main = ".svelte-kit/cloudflare/_worker.js"
 compatibility_date = "2025-04-20"
 
+[[routes]]
+pattern = "xdu-btest.hymint.space"
+custom_domain = true
+
 [assets]
 binding = "ASSETS"
 directory = ".svelte-kit/cloudflare"
