@@ -14,6 +14,7 @@ export const load: PageServerLoad = async ({ fetch, platform, url }) => {
   const qweather = new QWeather(fetch, platform);
 
   return {
+    search,
     result: await qweather.searchLocation(search),
   };
 };

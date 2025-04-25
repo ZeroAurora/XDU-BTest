@@ -17,6 +17,8 @@
     "@cloudflare/workers-types": "^4.20250423.0",
     "@eslint/compat": "^1.2.8",
     "@eslint/js": "^9.25.1",
+    "@iconify-json/tdesign": "^1.2.8",
+    "@iconify/tailwind4": "^1.0.6",
     "@sveltejs/adapter-cloudflare": "^7.0.1",
     "@sveltejs/kit": "^2.20.7",
     "@sveltejs/vite-plugin-svelte": "^5.0.3",

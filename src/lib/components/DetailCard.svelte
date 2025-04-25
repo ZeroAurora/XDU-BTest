@@ -16,12 +16,12 @@
   } as const;
 </script>
 
-<div class="card bg-gray-100/50 shadow-sm">
+<div class="card bg-base-200/50 shadow-sm">
   <div class="card-body">
     <h2 class="card-title text-2xl">空气污染物详情</h2>
     <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
-      {#each Object.entries(pollutants) as [key, label]}
-        <div class="flex flex-col items-center p-3 bg-white/50 rounded-sm shadow-xs">
+      {#each Object.entries(pollutants) as [key, label] (key)}
+        <div class="flex flex-col items-center p-3 bg-base-100/50 rounded-sm shadow-xs">
           <div class="text-xl font-bold">{props.aqNow[key as keyof Now]}</div>
           <div class="text-sm text-gray-500">{label}</div>
         </div>

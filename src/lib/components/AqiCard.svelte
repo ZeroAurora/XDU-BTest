@@ -52,9 +52,18 @@
     if (aqi <= 300) return "重度污染";
     return "严重污染";
   }
+
+  function getRecommendation(aqi: number): string {
+    if (aqi <= 50) return "空气清新，适合户外活动，尽情呼吸。";
+    if (aqi <= 100) return "空气质量尚可，敏感人群需稍加注意。";
+    if (aqi <= 150) return "空气略差，减少长时间户外运动。";
+    if (aqi <= 200) return "明显污染，外出建议佩戴口罩防护。";
+    if (aqi <= 300) return "空气污浊，尽量避免户外活动。";
+    return "空气危害健康，紧闭门窗，减少外出。";
+  }
 </script>
 
-<div class="card bg-gray-100/50 shadow-sm">
+<div class="card bg-base-200/50 shadow-sm">
   <div class="card-body">
     <h2 class="card-title text-2xl">空气质量指数（AQI）</h2>
     <div class="flex w-full h-full items-center justify-center">
@@ -67,6 +76,7 @@
           class="text-xl font-bold mt-2"
           style:color={`rgb(${color[0]}, ${color[1]}, ${color[2]})`}>{getAQIStatus(props.aqi)}</span
         >
+        <div class="text-sm italic text-gray-500 mt-2">{getRecommendation(props.aqi)}</div>
       </div>
     </div>
   </div>
