@@ -1,38 +1,29 @@
-# sv
+# XDU-BTest
 
-Everything you need to build a Svelte project, powered by [`sv`](https://github.com/sveltejs/cli).
+西电本科生实验实践能力测试 专业实验实践能力（B 级）达标测试题 雾霾探测系统设计
 
-## Creating a project
+Designed & Coded by ZeroAurora (Lin Zhihang) 
 
-If you're seeing this, you've probably already done this step. Congrats!
+## 在线预览
 
-```bash
-# create a new project in the current directory
-npx sv create
+https://xdu-btest.hymint.space/
 
-# create a new project in my-app
-npx sv create my-app
+## 使用技术
+
+- Svelte 5 (with SvelteKit)
+- Tailwind CSS 4 & daisyUI 5
+- CloudFlare Worker
+- 和风天气
+
+## 本地运行
+
+确保本地安装有 Node.js 环境与 pnpm 包管理器。
+
+```shell
+pnpm install
+pnpm dev
 ```
 
-## Developing
+## License
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
-
-```bash
-npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
-
-## Building
-
-To create a production version of your app:
-
-```bash
-npm run build
-```
-
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
+All rights reserved. Specifically, you can use this code only for reference purposes. Any kind of direct copying inside your homework or assignment is strictly prohibited.
