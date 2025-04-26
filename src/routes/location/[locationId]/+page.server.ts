@@ -17,6 +17,7 @@ export const load: PageServerLoad = async ({ fetch, params, platform }) => {
 
   return {
     location: location.location[0],
+    weather: await qweather.getWeather(locationId),
     airQuality: await qweather.getAirQuality(locationId),
   };
 };

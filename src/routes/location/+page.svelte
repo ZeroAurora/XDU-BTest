@@ -15,8 +15,8 @@
             replaceState: true,
           });
         },
-        (error) => {
-          console.error("Error getting location", error);
+        () => {
+          alert("获取定位失败");
         },
       );
     } else {

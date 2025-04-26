@@ -7,10 +7,12 @@
   import { enhance } from "$app/forms";
 
   import AqiCard from "$lib/components/AqiCard.svelte";
-  import DetailCard from "$lib/components/DetailCard.svelte";
+  import AqDetailCard from "$lib/components/AqDetailCard.svelte";
 
   const { data }: PageProps = $props();
-  const now = $derived(data.airQuality?.now || {});
+  const location = $derived(data.location);
+  const weather = $derived(data.weather?.now || {});
+  const aq = $derived(data.airQuality?.now || {});
 
   let displayAlert = $derived(page.form?.cleared as boolean);
 
@@ -23,7 +25,7 @@
   });
 
   onMount(() => {
-    localStorage.setItem("locationId", data.location.id);
+    localStorage.setItem("locationId", location.id);
   });
 
   function getBgColor(aqi: number): string {
@@ -37,28 +39,37 @@
   }
 </script>
 
-<div class={getBgColor(Number(now.aqi))}>
+<div class={getBgColor(Number(aq.aqi))}>
   <main class="container max-w-7xl min-h-screen mx-auto px-4 py-8">
     <header class="flex flex-col gap-2">
-      <h1 class="text-4xl font-bold">{data.location.name}</h1>
-      <div class="flex items-center gap-2">
-        <p class="text-lg text-gray-500">
-          {data.location.country}
-          {data.location.adm1}
-          {data.location.adm2}
+      <div class="flex justify-between text-4xl font-bold">
+        <h1>{location.name}</h1>
+        <p>{weather.temp}°C</p>
+      </div>
+      <div class="flex justify-between text-lg text-gray-500">
+        <div class="flex items-center gap-2">
+          <p>
+            <span>{location.country}</span>
+            <span>{location.adm1}</span>
+            <span>{location.adm2}</span>
+          </p>
+          <a class="icon-[tdesign--location]" href="/location" aria-label="选择地点"></a>
+        </div>
+        <p>
+          <span class="qi-{weather.icon}"></span>
+          {weather.text}
         </p>
-        <a class="icon-[tdesign--location] size-[1rem]" href="/location" aria-label="选择地点"></a>
       </div>
     </header>
 
     <section class="flex flex-col gap-6 mt-6">
-      <AqiCard aqi={Number(now.aqi || 0)} />
-      <DetailCard aqNow={now} />
+      <AqiCard aqi={Number(aq.aqi || 0)} />
+      <AqDetailCard {aq} />
     </section>
 
     <footer class="mt-6 text-sm text-gray-500">
       <p>数据来源：和风天气</p>
-      <p>上次更新：{new Date(now.pubTime).toLocaleString()}</p>
+      <p>上次更新：{new Date(aq.pubTime).toLocaleString()}</p>
       <form action="?/clearCache" method="POST" use:enhance>
         <button class="link">清除服务器缓存</button>
       </form>

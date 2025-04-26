@@ -1,5 +1,5 @@
 import type { KVNamespace } from "@cloudflare/workers-types";
-import type { AirQurality, Location } from "../types";
+import type { AirQurality, Location, Weather } from "../types";
 
 import ky from "ky";
 
@@ -37,29 +37,53 @@ export class QWeather {
     else return (await resp.json()) as Location;
   }
 
-  public async getAirQuality(locationId: string) {
-    const cached = await this.KV.get(`${locationId}:aqdata`);
+  private async fetchCachedData<T>(
+    endpoint: string,
+    locationId: string,
+    cacheKey: string,
+    expirationTtl: number,
+  ): Promise<T> {
+    const cached = await this.KV.get(cacheKey);
     if (cached) {
-      return JSON.parse(cached) as AirQurality;
+      return JSON.parse(cached) as T;
     }
 
     // If not found in KV, fetch from API
-    const aqData = await this.api
-      .get("v7/air/now", {
+    const data = await this.api
+      .get(endpoint, {
         searchParams: {
           location: locationId,
         },
       })
       .text();
 
-    await this.KV.put(`${locationId}:aqdata`, aqData, {
-      expirationTtl: 1800, // 30 minutes
+    await this.KV.put(cacheKey, data, {
+      expirationTtl,
     });
 
-    return JSON.parse(aqData) as AirQurality;
+    return JSON.parse(data) as T;
+  }
+
+  public async getWeather(locationId: string) {
+    return this.fetchCachedData<Weather>(
+      "v7/weather/now",
+      locationId,
+      `${locationId}:weather`,
+      600, // 10 minutes
+    );
+  }
+
+  public async getAirQuality(locationId: string) {
+    return this.fetchCachedData<AirQurality>(
+      "v7/air/now",
+      locationId,
+      `${locationId}:aqdata`,
+      1800, // 30 minutes
+    );
   }
 
   public async clearCache(locationId: string) {
+    await this.KV.delete(`${locationId}:weather`);
     await this.KV.delete(`${locationId}:aqdata`);
   }
 }

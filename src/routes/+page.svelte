@@ -4,8 +4,8 @@
 
   onMount(() => {
     const locationId = localStorage.getItem("locationId");
-    if (locationId) goto(`/location/${locationId}`);
-    else goto("/location");
+    if (locationId) goto(`/location/${locationId}`, { replaceState: true });
+    else goto("/location", { replaceState: true });
   });
 </script>
 

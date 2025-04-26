@@ -2,9 +2,9 @@
   import type { Now } from "$lib/types/AirQuality";
 
   interface Props {
-    aqNow: Now;
+    aq: Now;
   }
-  const props: Props = $props();
+  const { aq }: Props = $props();
 
   const pollutants = {
     co: "一氧化碳",
@@ -22,7 +22,9 @@
     <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
       {#each Object.entries(pollutants) as [key, label] (key)}
         <div class="flex flex-col items-center p-3 bg-base-100/50 rounded-sm shadow-xs">
-          <div class="text-xl font-bold">{props.aqNow[key as keyof Now]}</div>
+          <div class="text-xl font-bold">
+            <span>{aq[key as keyof Now]}</span>
+          </div>
           <div class="text-sm text-gray-500">{label}</div>
         </div>
       {/each}
